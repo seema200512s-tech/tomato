@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMORA AI | User Login</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    /* ==========================================================
+       TOMORA AI - PREMIUM BRAND STYLES
+    ========================================================== */
+    :root {
+        --primary: #dc2626;
+        --primary-dark: #991b1b;
+        --primary-deep: #450a0a;
+        --primary-light: #ef4444;
+        --primary-soft: #fef2f2;
+        --tomato: #f04438;
+        --tomato-light: #fb6b5f;
+        --orange: #f97316;
+        --orange-light: #fb923c;
+        --burgundy: #5f1015;
+        --body-bg: #faf8f7;
+        --soft-bg: #fff5f3;
+        --card-bg: #ffffff;
+        --dark: #211416;
+        --dark-soft: #3d292b;
+        --muted: #756668;
+        --white: #ffffff;
+        --border: rgba(185, 28, 28, 0.10);
+        --shadow-sm: 0 8px 25px rgba(70, 15, 15, 0.06);
+        --shadow-md: 0 18px 45px rgba(70, 15, 15, 0.10);
+        --shadow-lg: 0 30px 75px rgba(70, 15, 15, 0.16);
+        --radius-xl: 28px;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        margin: 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--dark);
+        background: radial-gradient(circle at 10% 10%, rgba(220,38,38,.035), transparent 25%), var(--body-bg);
+        overflow-x: hidden;
+    }
+
+    /* ==========================================================
+       NAVBAR
+    ========================================================== */
+    .navbar-custom {
+        position: fixed;
+        top: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(1180px, calc(100% - 30px));
+        padding: 10px 14px;
+        border-radius: 22px;
+        background: rgba(255,255,255,.92);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        border: 1px solid rgba(185,28,28,.10);
+        box-shadow: 0 15px 45px rgba(70,15,15,.10);
+        z-index: 9999;
+        transition: .35s ease;
+    }
+
+    .navbar-custom:hover {
+        box-shadow: 0 20px 55px rgba(70,15,15,.15);
+    }
+
+    .navbar-brand {
+        font-size: 1.45rem;
+        font-weight: 800;
+        letter-spacing: -.7px;
+        color: var(--dark) !important;
+    }
+
+    .brand-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 13px;
+        color: white;
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+        box-shadow: 0 8px 20px rgba(220,38,38,.30);
+    }
+
+    .brand-ai { color: var(--primary); }
+
+    .nav-link {
+        color: #6d5e60 !important;
+        font-size: .86rem;
+        font-weight: 700;
+        margin: 0 4px;
+        padding: 9px 13px !important;
+        border-radius: 12px;
+        transition: .3s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+        color: var(--primary) !important;
+        background: rgba(220,38,38,.07);
+    }
+
+    .nav-user {
+        border: 1px solid rgba(220,38,38,.18);
+        background: white;
+        color: var(--primary);
+        font-size: .78rem;
+        font-weight: 800;
+        padding: 9px 15px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: .3s ease;
+    }
+
+    .nav-user:hover, .nav-user.active {
+        color: white;
+        background: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    .nav-signup {
+        border: none;
+        color: white;
+        font-size: .78rem;
+        font-weight: 800;
+        padding: 9px 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f04438, #dc2626);
+        box-shadow: 0 7px 20px rgba(220,38,38,.25);
+        text-decoration: none;
+        transition: .3s ease;
+    }
+
+    .nav-signup:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(220,38,38,.35);
+    }
+
+    .nav-admin {
+        border: none;
+        color: white;
+        font-size: .78rem;
+        font-weight: 800;
+        padding: 9px 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        box-shadow: 0 7px 20px rgba(249,115,22,.25);
+        transition: .3s ease;
+    }
+
+    .nav-admin:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(249,115,22,.35);
+    }
+
+    /* ==========================================================
+       HERO SECTION WITH LOGIN CONTAINER
+    ========================================================== */
+    .hero-section {
+        position: relative;
+        min-height: 100vh;
+        padding: 175px 0 105px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        color: white;
+        background: radial-gradient(circle at 82% 15%, rgba(239,68,68,.28), transparent 28%),
+                    radial-gradient(circle at 12% 80%, rgba(249,115,22,.15), transparent 25%),
+                    linear-gradient(135deg, #240708 0%, #450a0a 42%, #7f1d1d 100%);
+    }
+
+    .hero-content { position: relative; z-index: 5; }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 14px;
+        border-radius: 50px;
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.15);
+        backdrop-filter: blur(15px);
+        font-size: .75rem;
+        font-weight: 800;
+    }
+
+    .hero-badge i { color: #fb923c; }
+
+    .hero-title {
+        margin-top: 22px;
+        font-size: clamp(2.8rem, 4.8vw, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -2.5px;
+        font-weight: 800;
+        max-width: 720px;
+    }
+
+    .hero-title span {
+        background: linear-gradient(90deg, #ff8a65, #ef4444, #fb923c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+        max-width: 650px;
+        color: rgba(255,255,255,.72);
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-top: 22px;
+    }
+
+    .btn-primary-hero {
+        border: none;
+        color: white;
+        padding: 14px 24px;
+        border-radius: 14px;
+        font-weight: 800;
+        text-decoration: none;
+        background: linear-gradient(135deg, #f04438, #dc2626);
+        box-shadow: 0 12px 30px rgba(220,38,38,.35);
+        transition: .3s ease;
+    }
+
+    .btn-primary-hero:hover {
+        color: white;
+        transform: translateY(-4px);
+        box-shadow: 0 17px 38px rgba(220,38,38,.45);
+    }
+
+    .btn-secondary-hero {
+        color: white;
+        padding: 13px 23px;
+        border-radius: 14px;
+        font-weight: 800;
+        text-decoration: none;
+        border: 1px solid rgba(255,255,255,.20);
+        background: rgba(255,255,255,.07);
+        backdrop-filter: blur(10px);
+        transition: .3s ease;
+    }
+
+    .btn-secondary-hero:hover {
+        color: white;
+        background: rgba(255,255,255,.14);
+        transform: translateY(-4px);
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 35px;
+        margin-top: 55px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255,255,255,.10);
+    }
+
+    .stat-number { font-size: 1.4rem; font-weight: 800; }
+    .stat-label { color: rgba(255,255,255,.50); font-size: .7rem; margin-top: 3px; }
+
+    /* Glassmorphism User Login Box */
+    .hero-login-card {
+        position: relative;
+        z-index: 5;
+        border-radius: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(25px);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+        padding: 40px;
+        color: var(--dark);
+    }
+
+    .form-control {
+        border-radius: 13px;
+        padding: 12px 15px;
+        border: 1px solid #e9dddd;
+        background: #fffafa;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(220, 38, 38, .10);
+    }
+
+    .input-group-text {
+        border-radius: 13px 0 0 13px;
+        background: #fdf2f2;
+        border: 1px solid #e9dddd;
+        border-right: none;
+        color: var(--primary);
+    }
+
+    .input-group .form-control {
+        border-radius: 0 13px 13px 0;
+    }
+
+    .login-btn {
+        border: none;
+        width: 100%;
+        padding: 14px;
+        border-radius: 13px;
+        color: white;
+        font-weight: 800;
+        background: linear-gradient(135deg, #f04438, #dc2626);
+        box-shadow: 0 8px 25px rgba(220, 38, 38, 0.30);
+        transition: .3s ease;
+    }
+
+    .login-btn:hover {
+        opacity: 0.95;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(220, 38, 38, 0.40);
+    }
+
+    /* ==========================================================
+       TWO-COLUMN ADMIN MODAL OVERLAY
+    ========================================================== */
+    .modal-content-2col {
+        border: none;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(70,15,15,.30);
+    }
+
+    .admin-modal-sidebar {
+        background: linear-gradient(135deg, #2b0507, #7f1d1d);
+        color: white;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .admin-modal-sidebar::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        bottom: -50px;
+        right: -50px;
+        border-radius: 50%;
+        background: rgba(249,115,22,.15);
+    }
+
+    /* ==========================================================
+       GENERAL SECTIONS
+    ========================================================== */
+    .section { padding: 100px 0; }
+    .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 12px;
+        border-radius: 50px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: .7rem;
+        font-weight: 800;
+    }
+
+    .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        margin-top: 14px;
+    }
+
+    .section-description {
+        color: var(--muted);
+        max-width: 650px;
+        margin: 12px auto 0;
+        line-height: 1.8;
+    }
+
+    /* ==========================================================
+       CTA & FOOTER
+    ========================================================== */
+    .cta-section { padding: 90px 0; }
+    .cta-box {
+        position: relative;
+        overflow: hidden;
+        border-radius: 32px;
+        padding: 60px;
+        color: white;
+        background: radial-gradient(circle at 90% 15%, rgba(239,68,68,.28), transparent 30%),
+                    linear-gradient(135deg, #2b0507, #7f1d1d);
+        box-shadow: 0 30px 70px rgba(100,10,10,.20);
+    }
+
+    footer {
+        background: #210709;
+        color: rgba(255,255,255,.55);
+        padding: 50px 0 30px;
+    }
+
+    .footer-brand { color: white; font-weight: 800; font-size: 1.2rem; }
+    .footer-text { font-size: .75rem; line-height: 1.8; }
+
+    .chat-widget-btn {
+        position: fixed;
+        right: 28px;
+        bottom: 28px;
+        width: 62px;
+        height: 62px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.35rem;
+        cursor: pointer;
+        z-index: 9998;
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+        box-shadow: 0 15px 35px rgba(220,38,38,.35);
+        transition: .3s ease;
+    }
+
+    .chat-widget-btn:hover {
+        transform: translateY(-5px) rotate(-3deg);
+        box-shadow: 0 20px 45px rgba(220,38,38,.45);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:991px) {
+        .navbar-custom { top: 10px; border-radius: 18px; }
+        .hero-section { padding-top: 150px; text-align: center; }
+        .hero-subtitle { margin-left: auto; margin-right: auto; }
+        .hero-stats { justify-content: center; text-align: left; }
+        .hero-login-card { margin-top: 30px; }
+    }
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================================================
+     NAVBAR
+========================================================== -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <!-- BRAND -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+            <span class="brand-icon">
+                <i class="fa-solid fa-seedling"></i>
+            </span>
+            <span>
+                TOMORA <span class="brand-ai">AI</span>
+            </span>
+        </a>
+
+        <!-- MOBILE TOGGLER -->
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <i class="fa-solid fa-bars text-dark"></i>
+        </button>
+
+        <!-- NAVIGATION LINKS -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About System</a>
+                </li>
+            </ul>
+
+            <!-- RIGHT CONTROLS -->
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <!-- USER LOGIN -->
+                <a href="/login_user" class="btn nav-user active">
+                    <i class="fa-solid fa-user me-1"></i> User
+                </a>
+
+
+
+                <!-- ADMIN LOGIN OVERLAY BUTTON -->
+                <button class="btn nav-admin" data-bs-toggle="modal" data-bs-target="#adminLoginModal">
+                    <i class="fa-solid fa-shield-halved me-1"></i> Admin
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ==========================================================
+     HERO SECTION WITH LOGIN CONTAINER
+========================================================== -->
+<section class="hero-section" id="home">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <!-- HERO TEXT (MATCHED TO LOGIN INTENT) -->
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-shield-cat"></i>
+                        PLANT CARE & CROP HEALTH
+                    </div>
+
+                    <h1 class="hero-title">
+                        Protecting Your Crops with <span>TOMORA AI.</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Sign in to access deep learning leaf disease diagnostics, track your diagnosis history, view Grad-CAM heatmaps, and obtain real-time crop treatment recommendations.
+                    </p>
+
+                    <!-- BUTTONS -->
+                    <div class="d-flex gap-3 flex-wrap justify-content-lg-start justify-content-center mt-4">
+                        <a href="/register" class="btn btn-primary-hero">
+                            <i class="fa-solid fa-user-plus me-2"></i> Create Account
+                        </a>
+                        <a href="#about" class="btn btn-secondary-hero">
+                            <i class="fa-solid fa-circle-info me-2"></i> Learn More
+                        </a>
+                    </div>
+
+                    <!-- STATS -->
+                    <div class="hero-stats">
+                        <div>
+                            <div class="stat-number">98%+</div>
+                            <div class="stat-label">CNN Accuracy</div>
+                        </div>
+                        <div>
+                            <div class="stat-number">XAI</div>
+                            <div class="stat-label">Grad-CAM Insights</div>
+                        </div>
+                        <div>
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Crop Advisory</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGIN CONTAINER (REPLACED HERO IMAGE) -->
+            <div class="col-lg-6">
+                <div class="hero-login-card">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-2 mb-2 fw-bold" style="font-size: 0.75rem;">
+                            <i class="fa-solid fa-lock me-1"></i> USER PORTAL
+                        </span>
+                        <h2 class="h3 fw-bold text-dark mb-1">Welcome Back</h2>
+                        <p class="text-muted small">Sign in to manage your tomato crop advisory dashboard</p>
+                    </div>
+
+                    <form name="form1" method="post" action="/login_user">
+                        <div class="mb-3">
+                            <label for="uname" class="form-label small fw-bold text-dark">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" id="uname" name="uname" class="form-control" placeholder="Enter Username" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="pass" class="form-label small fw-bold text-dark">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                <input type="password" id="pass" name="pass" class="form-control" placeholder="Enter Password" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" name="btn" class="login-btn mb-3">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i> Log In
+                        </button>
+                    </form>
+
+                    {% if msg %}
+                    <div class="alert alert-danger py-2 text-center small mb-3" role="alert">
+                        <i class="fa-solid fa-circle-exclamation me-1"></i> {{ msg }}
+                    </div>
+                    {% endif %}
+
+                    <div class="text-center pt-2 border-top">
+                        <p class="mb-0 text-muted small">
+                            Don't have an account? 
+                            <a href="/register" class="fw-bold text-danger text-decoration-none ms-1">
+                                Sign Up Here <i class="fa-solid fa-arrow-right-long text-xs ms-1"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==========================================================
+     ABOUT / OVERVIEW SECTION
+========================================================== -->
+<section class="section" id="about" style="background: var(--soft-bg);">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="position-relative p-2 rounded-4 bg-white border shadow-md">
+                    <img src="../static/img/tom.png" class="img-fluid rounded-4 w-100" alt="Leaf Analysis" onerror="this.src='https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=1200&q=85'">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div>
+                    <span class="section-label">
+                        <i class="fa-solid fa-circle-info"></i> ABOUT THE SYSTEM
+                    </span>
+                    <h2 class="section-title">
+                        Automated Tomato <span style="color:var(--primary);">Disease Advisory</span>
+                    </h2>
+                    <p class="section-description text-start ms-0 mt-3 mb-4">
+                        TOMORA AI utilizes state-of-the-art Convolutional Neural Networks (CNN) and Grad-CAM visual heatmaps to accurately diagnose leaf diseases directly from your images. Log in to upload leaf samples, track diagnostic history, and get instant recommendations for crop treatment.
+                    </p>
+                    <a href="/register" class="btn btn-primary-hero">
+                        <i class="fa-solid fa-rocket me-2"></i> Get Started Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==========================================================
+     CTA
+========================================================== -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box text-center">
+            <div class="position-relative z-1">
+                <span class="badge rounded-pill bg-white bg-opacity-10 px-3 py-2">TOMORA AI</span>
+                <h2 class="display-6 fw-bold mt-3">Turn Tomato Leaf Images Into Intelligent Insights.</h2>
+                <p class="mx-auto mt-3 text-white-50" style="max-width:650px;">
+                    AI-powered disease detection, explainable visual analytics, and decision support in one unified platform.
+                </p>
+                <a href="#home" class="btn btn-primary-hero mt-3">
+                    <i class="fa-solid fa-arrow-up me-2"></i> Back to Top
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==========================================================
+     FOOTER
+========================================================== -->
+<footer>
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+                <div class="footer-brand">
+                    <i class="fa-solid fa-seedling me-2 text-danger"></i> TOMORA AI
+                </div>
+                <p class="footer-text mt-2">
+                    An intelligent tomato crop advisory platform combining deep learning, explainable AI, and decision support.
+                </p>
+            </div>
+            <div class="col-lg-6 text-lg-end">
+                <p class="footer-text mb-0">&copy; 2026 TOMORA AI. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<!-- ==========================================================
+     TWO-COLUMN ADMIN LOGIN OVERLAY (MODAL)
+========================================================== -->
+<div class="modal fade" id="adminLoginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content modal-content-2col">
+            <div class="row g-0">
+                <!-- Left Column: Branding / Info -->
+                <div class="col-md-5 admin-modal-sidebar">
+                    <div>
+                        <span class="badge bg-warning text-dark rounded-pill px-3 py-2 mb-3 fw-bold">SECURE PORTAL</span>
+                        <h3 class="fw-bold text-white">Admin Control Center</h3>
+                        <p class="small text-white-50 mt-3">
+                            Manage model configurations, system parameters, dataset training inputs, and user logs.
+                        </p>
+                    </div>
+                    <div class="mt-4">
+                        <small class="text-white-50 d-block"><i class="fa-solid fa-shield-halved me-1"></i> Authorized Personnel Only</small>
+                    </div>
+                </div>
+
+                <!-- Right Column: Login Form -->
+                <div class="col-md-7 bg-white p-4 p-md-5 position-relative">
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    
+                    <div class="mb-4">
+                        <small style="color:var(--orange); font-weight:800;">ADMINISTRATOR</small>
+                        <h4 class="fw-bold mb-0 mt-1">Admin Sign In</h4>
+                    </div>
+
+                    <!-- Form Submits directly to index route -->
+                    <form method="post" action="/">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Admin Username</label>
+                            <input type="text" name="uname" class="form-control" placeholder="admin" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Password</label>
+                            <input type="password" name="pass" class="form-control" placeholder="••••••••" required>
+                        </div>
+
+                        <button class="login-btn mt-3" type="submit" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                            Access Admin Dashboard
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==========================================================
+     CHATBOT MODAL
+========================================================== -->
+<div class="modal fade" id="chatbotModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="mini-icon p-2 bg-light rounded-3 text-danger"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h5 class="fw-bold mb-0">TOMORA Assistant</h5>
+                        <small class="text-muted">AI Crop Support</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="height:300px; overflow-y:auto; background:#fffafa;">
+                <div class="p-3 rounded-4 bg-white shadow-sm">
+                    <small class="fw-bold" style="color:var(--primary);">TOMORA AI</small>
+                    <p class="small text-muted mb-0 mt-1">
+                        Hello! I can assist with leaf disease diagnosis, care guidelines, and prevention strategies.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ask about tomato diseases...">
+                    <button class="btn" style="background: var(--primary); color:white; border-radius: 0 12px 12px 0;">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMORA AI | Processing Frame</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    /* ==========================================================
+       IFRAME INNER CONTENT STYLES - MATCHING TOMORA AI
+    ========================================================== */
+    :root {
+        --primary: #dc2626;
+        --primary-dark: #991b1b;
+        --primary-soft: #fef2f2;
+        --orange: #f97316;
+        --dark: #211416;
+        --card-bg: #ffffff;
+        --border: rgba(185, 28, 28, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: transparent;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    .process-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px 20px;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 10px 30px rgba(70, 15, 15, 0.06);
+        text-align: center;
+        position: relative;
+    }
+
+    /* STEP HEADER BADGE */
+    .step-header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        border: 1px solid rgba(220, 38, 38, 0.2);
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* IMAGE CONTAINER WITH GLOW & PROGRESS ANIMATION */
+    .img-frame-container {
+        position: relative;
+        display: inline-block;
+        margin: 10px 0 20px 0;
+        padding: 8px;
+        background: #fdfaf8;
+        border: 2px dashed rgba(220, 38, 38, 0.3);
+        border-radius: 20px;
+    }
+
+    .processed-img {
+        width: 220px;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* PULSING STATUS DOT */
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--primary-dark);
+        margin-top: 10px;
+    }
+
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+        background-color: var(--orange);
+        border-radius: 50%;
+        box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+        animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(249, 115, 22, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+    }
+
+    /* RESULT BADGE FOR STEP 6 */
+    .result-badge {
+        background: linear-gradient(135deg, #211416 0%, #3d1418 100%);
+        color: #ffffff;
+        padding: 12px 20px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        margin-bottom: 16px;
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .result-badge span {
+        color: var(--orange);
+    }
+    </style>
+</head>
+
+<body onLoad="initialize()">
+
+<div class="process-card">
+
+    <!-- STEP 1: TEST IMAGE -->
+    {% if act=="1" %}
+        <div class="step-header-badge">
+            <i class="fa-solid fa-image"></i> Step 1: Raw Test Image
+        </div>
+        
+        <div>
+            <div class="img-frame-container">
+                <img src="../static/data/{{fn}}" class="processed-img" alt="Test Image">
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Initializing Neural Network Pipeline...</span>
+        </div>
+
+        <script>
+        setTimeout(function () {
+            window.location.href="/test_pro2?act=2";
+        }, 5000);
+        </script> 
+
+    <!-- STEP 2: NOISE FILTER -->
+    {% elif act=="2" %}
+        <div class="step-header-badge">
+            <i class="fa-solid fa-filter"></i> Step 2: Noise Filter Applied
+        </div>
+
+        <div>
+            <div class="img-frame-container">
+                <img src="../static/trained/ns_{{fn}}" class="processed-img" alt="Filtered Image">
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Filtering image background noise...</span>
+        </div>
+
+        <script>
+        setTimeout(function () {
+            window.location.href="/test_pro2?act=3";
+        }, 5000);
+        </script> 
+
+    <!-- STEP 3: BINARIZATION -->
+    {% elif act=="3" %}
+        <div class="step-header-badge">
+            <i class="fa-solid fa-adjust"></i> Step 3: Image Binarization
+        </div>
+
+        <div>
+            <div class="img-frame-container">
+                <img src="../static/trained/bb/bin_{{fn}}" class="processed-img" alt="Binarized Image">
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Converting image parameters to binary masks...</span>
+        </div>
+
+        <script>
+        setTimeout(function () {
+            window.location.href="/test_pro2?act=4";
+        }, 5000);
+        </script> 
+
+    <!-- STEP 4: SEGMENTATION -->
+    {% elif act=="4" %}
+        <div class="step-header-badge">
+            <i class="fa-solid fa-crop-simple"></i> Step 4: Leaf Segmentation
+        </div>
+
+        <div>
+            <div class="img-frame-container">
+                <img src="../static/trained/sg/sg_{{fn1}}" class="processed-img" alt="Segmented Image">
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Isolating diseased leaf regions...</span>
+        </div>
+
+        <script>
+        setTimeout(function () {
+            window.location.href="/test_pro2?act=5";
+        }, 5000);
+        </script> 
+
+    <!-- STEP 5: FEATURE EXTRACTION -->
+    {% elif act=="5" %}
+        <div class="step-header-badge">
+            <i class="fa-solid fa-microchip"></i> Step 5: Feature Extraction
+        </div>
+
+        <div>
+            <div class="img-frame-container">
+                <img src="../static/trained/ff/{{fn1}}" class="processed-img" alt="Extracted Features">
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Extracting CNN deep learning vectors...</span>
+        </div>
+
+        <script>
+        setTimeout(function () {
+            window.parent.location.href="/test_pro3?act=6";
+        }, 5000);
+        </script>
+
+    <!-- STEP 6: PREDICTED RESULT -->
+    {% elif act=="6" %}
+        <div class="step-header-badge bg-success bg-opacity-10 text-success border-success">
+            <i class="fa-solid fa-circle-check"></i> Step 6: Final Result
+        </div>
+
+        <div class="result-badge mt-2">
+            Predicted Class: <span>{{ts}}</span>
+        </div>
+
+        <div>
+            <div class="img-frame-container">
+                <img src="../static/data/{{fn}}" class="processed-img" alt="Predicted Result">
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+
+<!-- Dummy function to maintain compatibility with onLoad="initialize()" -->
+<script>
+function initialize() {
+    // Initialized Frame Context
+}
+</script>
+
+</body>
+</html>

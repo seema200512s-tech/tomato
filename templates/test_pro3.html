@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMORA AI — Diagnostic & Strategic Analysis</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6.4 (Latest) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link href="../static/img/favicon.ico" rel="icon">
+
+    <style>
+    /* ==========================================================
+       TOMORA AI — EXECUTIVE SYSTEM THEME & DASHBOARD LAYOUT
+    ========================================================== */
+    :root {
+        --primary: #dc2626;
+        --primary-dark: #991b1b;
+        --primary-soft: rgba(220, 38, 38, 0.08);
+        --accent-orange: #f97316;
+        --dark-bg: #12090b;
+        --dark-card: #1c1013;
+        --sidebar-bg: #1a0b0e;
+        --light-bg: #fdfaf8;
+        --card-border: rgba(220, 38, 38, 0.12);
+        --text-main: #211416;
+        --text-muted: #786467;
+        --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text-main);
+        overflow-x: hidden;
+    }
+
+    /* ---------------- SIDEBAR LAYOUT ---------------- */
+    .app-wrapper {
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 270px;
+        background: var(--sidebar-bg);
+        color: #ffffff;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 24px 16px;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .brand-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px 24px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand-icon {
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(135deg, var(--primary), var(--accent-orange));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+    }
+
+    .brand-text {
+        font-weight: 800;
+        font-size: 1.2rem;
+        letter-spacing: -0.5px;
+        color: #fff;
+    }
+
+    .brand-text span {
+        color: var(--accent-orange);
+    }
+
+    .nav-menu {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+        flex-grow: 1;
+    }
+
+    .nav-item {
+        margin-bottom: 6px;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        color: #bfaab0;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+        background: rgba(220, 38, 38, 0.15);
+        color: #ffffff;
+    }
+
+    .nav-link.active {
+        border-left: 4px solid var(--accent-orange);
+    }
+
+    .nav-link i {
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+        color: var(--accent-orange);
+    }
+
+    .sidebar-footer {
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.78rem;
+        color: #7a6369;
+        text-align: center;
+    }
+
+    /* ---------------- MAIN CONTENT WRAPPER ---------------- */
+    .main-wrapper {
+        margin-left: 270px;
+        flex-grow: 1;
+        padding: 30px 40px;
+        max-width: calc(100% - 270px);
+    }
+
+    /* TOP HEADER BAR */
+    .tm-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        background: #ffffff;
+        border-radius: var(--radius);
+        border: 1px solid var(--card-border);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        margin-bottom: 28px;
+    }
+
+    .tm-title h2 {
+        margin: 0;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--text-main);
+    }
+
+    .tm-lang a {
+        display: inline-block;
+        padding: 6px 14px;
+        margin: 0 2px;
+        border-radius: 20px;
+        border: 1px solid rgba(220, 38, 38, 0.2);
+        color: var(--primary-dark);
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .tm-lang a.active, .tm-lang a:hover {
+        background: var(--primary);
+        color: #ffffff;
+        border-color: var(--primary);
+    }
+
+    /* CARDS & PANELS */
+    .tm-card {
+        background: #ffffff;
+        border-radius: var(--radius);
+        border: 1px solid var(--card-border);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        padding: 28px;
+        margin-bottom: 28px;
+        position: relative;
+    }
+
+    .tm-card h4 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tm-card h4 i {
+        color: var(--primary);
+    }
+
+    /* IMAGES & DIAGNOSIS */
+    .tm-imgbox {
+        text-align: center;
+    }
+
+    .tm-imgbox img {
+        width: 100%;
+        max-width: 260px;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 16px;
+        border: 3px solid #fff;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .tm-imgbox .cap {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    .tm-disease {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+        line-height: 1.2;
+    }
+
+    .tm-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin: 6px 6px 6px 0;
+        color: #ffffff;
+    }
+
+    .b-fungal { background: #d97706; }
+    .b-bacterial { background: #dc2626; }
+    .b-viral { background: #9333ea; }
+    .b-pest { background: #ea580c; }
+    .b-none { background: #16a34a; }
+    .b-sev { background: #4b5563; }
+
+    .tm-bar {
+        background: #f1e5e7;
+        border-radius: 10px;
+        height: 12px;
+        overflow: hidden;
+    }
+
+    .tm-bar > div {
+        height: 100%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--primary), var(--accent-orange));
+    }
+
+    .tm-bar.warn > div { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    .tm-bar.red > div { background: linear-gradient(90deg, #dc2626, #991b1b); }
+
+    .tm-kv { margin: 12px 0; }
+    .tm-kv .k {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        font-weight: 700;
+    }
+
+    .tm-kv .v {
+        font-size: 1.05rem;
+        color: var(--text-main);
+        font-weight: 700;
+    }
+
+    /* LIST STYLES */
+    .tm-list {
+        padding-left: 0;
+        list-style: none;
+        margin: 0;
+    }
+
+    .tm-list li {
+        padding: 10px 0 10px 28px;
+        position: relative;
+        border-bottom: 1px dashed #f0e2e5;
+        color: var(--text-main);
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    .tm-list li:last-child { border-bottom: 0; }
+
+    .tm-list li:before {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        content: "\f058";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    /* ACTION PLAN COLUMNS */
+    .tm-col {
+        border-radius: 14px;
+        padding: 20px;
+        height: 100%;
+    }
+
+    .col-today { background: #fef2f2; border: 1px solid rgba(220, 38, 38, 0.15); }
+    .col-today h5 { color: #dc2626; font-weight: 700; }
+
+    .col-week { background: #fffbeeb0; border: 1px solid rgba(245, 158, 11, 0.2); }
+    .col-week h5 { color: #d97706; font-weight: 700; }
+
+    .col-prev { background: #f0fdf4; border: 1px solid rgba(22, 163, 74, 0.2); }
+    .col-prev h5 { color: #16a34a; font-weight: 700; }
+
+    /* WEATHER & METRICS */
+    .tm-tile {
+        background: #fdf6f7;
+        border-radius: 14px;
+        text-align: center;
+        padding: 16px 8px;
+        margin-bottom: 12px;
+        border: 1px solid var(--card-border);
+    }
+
+    .tm-tile .n {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+    }
+
+    .tm-tile .l {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .tm-risk {
+        border-left: 6px solid #16a34a;
+        background: #f0fdf4;
+        border-radius: 12px;
+        padding: 18px;
+    }
+
+    .tm-risk.moderate { border-color: #f59e0b; background: #fffbeeb0; }
+    .tm-risk.high { border-color: #dc2626; background: #fef2f2; }
+
+    .tm-spray {
+        background: #eff6ff;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        padding: 14px 18px;
+        color: #1e40af;
+        margin-top: 14px;
+    }
+
+    .tm-forecast {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .tm-forecast div {
+        flex: 1;
+        min-width: 130px;
+        background: #fdf6f7;
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    /* FINAL EXECUTIVE ADVISORY CARD */
+    .tm-final {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+        color: #ffffff;
+        border-radius: var(--radius);
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .tm-final h4 { color: #ffffff; }
+    .tm-final h4 i { color: var(--accent-orange); }
+
+    .tm-final .row-f {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.95rem;
+    }
+
+    .tm-final .row-f:last-child { border-bottom: 0; }
+    .tm-final .lab { font-weight: 700; color: #fca5a5; }
+
+    /* TABLES */
+    .tm-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+    .tm-table th {
+        background: #fef2f2;
+        color: var(--primary-dark);
+        text-align: left;
+        padding: 12px;
+        width: 180px;
+    }
+
+    .tm-table td {
+        padding: 12px;
+        border-bottom: 1px solid #f8e8ea;
+    }
+
+    /* CHATBOT INTEGRATION */
+    .tm-chat-box {
+        height: 280px;
+        overflow-y: auto;
+        background: #fdf6f7;
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid var(--card-border);
+    }
+
+    .msg {
+        max-width: 82%;
+        padding: 10px 16px;
+        border-radius: 16px;
+        margin-bottom: 12px;
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
+
+    .msg.bot {
+        background: #ffffff;
+        border: 1px solid var(--card-border);
+        color: var(--text-main);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .msg.me {
+        background: var(--primary);
+        color: #ffffff;
+        margin-left: auto;
+    }
+
+    .tm-chip {
+        display: inline-block;
+        background: #fef2f2;
+        color: var(--primary-dark);
+        border: 1px solid rgba(220, 38, 38, 0.2);
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin: 4px 4px 0 0;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .tm-chip:hover {
+        background: var(--primary);
+        color: #ffffff;
+    }
+
+    .tm-note {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+    }
+
+    /* RESPONSIVE LAYOUT */
+    @media (max-width: 992px) {
+        .sidebar { width: 80px; padding: 20px 10px; }
+        .brand-text, .nav-text, .sidebar-footer span { display: none; }
+        .main-wrapper { margin-left: 80px; max-width: calc(100% - 80px); padding: 20px; }
+    }
+
+    @media print {
+        .sidebar, .tm-noprint, .tm-chat, .back-to-top { display: none !important; }
+        .main-wrapper { margin-left: 0 !important; max-width: 100% !important; padding: 0 !important; }
+        .tm-card { box-shadow: none; border: 1px solid #ccc; }
+    }
+    </style>
+
+    <script>
+    function getSubmit() {
+        document.getElementById("form1").submit(); 
+    }
+    </script>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+        <div>
+            <div class="brand-header">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="brand-text">
+                    TOMORA<span>.AI</span>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#diagnosis" class="nav-link active">
+                        <i class="fa-solid fa-stethoscope"></i>
+                        <span class="nav-text">Diagnosis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#xai-evidence" class="nav-link">
+                        <i class="fa-solid fa-microscope"></i>
+                        <span class="nav-text">XAI Evidence</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#action-plan" class="nav-link">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span class="nav-text">Action Plan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#weather" class="nav-link">
+                        <i class="fa-solid fa-cloud-sun-rain"></i>
+                        <span class="nav-text">Weather Risk</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#ai-assistant" class="nav-link">
+                        <i class="fa-solid fa-robot"></i>
+                        <span class="nav-text">AI Assistant</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/test_img" class="nav-link">
+                        <i class="fa-solid fa-robot"></i>
+                        <span class="nav-text">Predict</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link text-danger">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span class="nav-text">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            <span>&copy; TOMORA AI Systems</span>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-wrapper">
+
+        {% if r %}
+        <!-- TOP HEADER BAR -->
+        <div class="tm-topbar">
+            <div class="tm-title">
+                <h2><i class="fas fa-leaf text-danger me-2"></i> {{ t.page_title }}</h2>
+                <small class="text-muted">{{ t.page_sub }}</small>
+            </div>
+            <div class="tm-noprint d-flex align-items-center">
+                <span class="tm-lang me-2">
+                    {% for code, label in langs.items() %}
+                    <a href="{{ url_for('test_pro3', lang=code, city=city, act=act) }}" class="{{ 'active' if code==lang else '' }}">{{ label }}</a>
+                    {% endfor %}
+                </span>
+                <button class="btn btn-sm btn-outline-danger" onclick="window.print()">
+                    <i class="fas fa-print me-1"></i> {{ t.print_report }}
+                </button>
+            </div>
+        </div>
+
+        {% if lang != 'en' %}
+        <div class="tm-note tm-noprint mb-3 ms-1">
+            <i class="fas fa-language"></i> {{ t.lang_note }} (Google Translate)
+        </div>
+        {% endif %}
+
+        <!-- 1. DIAGNOSIS + EXPLAINABILITY IMAGES -->
+        <div class="tm-card" id="diagnosis">
+            <div class="row align-items-center">
+                <div class="col-md-4 tm-imgbox mb-3 mb-md-0">
+                    <img src="{{ url_for('static', filename=m.up_file) }}" alt="leaf">
+                    <div class="cap">{{ t.your_leaf }}</div>
+                </div>
+                <div class="col-md-4 tm-imgbox mb-3 mb-md-0">
+                    {% if m.xai_file %}
+                    <img src="{{ url_for('static', filename=m.xai_file) }}?v={{ m.stamp }}" alt="focus map">
+                    <div class="cap">{{ t.focus_map }} - {{ r.xai_label }}</div>
+                    {% else %}
+                    <img src="{{ url_for('static', filename=m.dataset_file) }}" alt="matched">
+                    <div class="cap">{{ t.matched_leaf }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <div class="tm-kv">
+                        <div class="k">{{ t.predicted_disease }}</div>
+                        <div class="tm-disease">{{ r.disease }}</div>
+                    </div>
+                    <div>
+                        <span class="tm-badge b-{{ m.type }}">{{ r.type_label }}</span>
+                        <span class="tm-badge b-sev">{{ t.severity }}: {{ r.severity }}</span>
+                    </div>
+
+                    {% if m.conf is not none %}
+                    <div class="tm-kv mt-3">
+                        <div class="k">{{ t.confidence }} ({{ t[m.conf_src] }})</div>
+                        <div class="v">{{ m.conf }}%</div>
+                        <div class="tm-bar"><div style="width:{{ m.conf }}%"></div></div>
+                    </div>
+                    {% endif %}
+
+                    {% if m.area is not none %}
+                    <div class="tm-kv">
+                        <div class="k">{{ t.infected_area }} - {{ r.stage }}</div>
+                        <div class="v">{{ m.area }}%</div>
+                        <div class="tm-bar {{ 'red' if m.area>=20 else ('warn' if m.area>=5 else '') }}"><div style="width:{{ [m.area*2,100]|min }}%"></div></div>
+                    </div>
+                    {% endif %}
+
+                    <div class="tm-kv">
+                        <div class="k">{{ t.pathogen }}</div>
+                        <div class="v" style="font-size:0.95rem">{{ r.pathogen }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. WHY / EXPLANATION -->
+        <div class="row" id="xai-evidence">
+            <div class="col-lg-7">
+                <div class="tm-card">
+                    <h4><i class="fas fa-search"></i> {{ t.why_title }}</h4>
+                    <ul class="tm-list mb-3">
+                        {% for line in r.why %}<li>{{ line }}</li>{% endfor %}
+                    </ul>
+                    <div class="k tm-note text-uppercase fw-bold mt-2">{{ t.visual_cues }}</div>
+                    <ul class="tm-list">
+                        {% for c in r.cues %}<li>{{ c }}</li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="tm-card">
+                    <h4><i class="fas fa-microscope"></i> {{ t.feature_evidence }}</h4>
+                    {% if m.stats %}
+                      {% for lab, val in [(t.lesion_cov, m.stats.lesion), (t.yellowing, m.stats.yellow), (t.browning, m.stats.brown), (t.dark_area, m.stats.dark)] %}
+                      <div class="mb-3">
+                          <div class="d-flex justify-content-between font-weight-bold mb-1">
+                              <span class="small text-muted">{{ lab }}</span>
+                              <strong>{{ val }}%</strong>
+                          </div>
+                          <div class="tm-bar {{ 'red' if val>=20 else ('warn' if val>=5 else '') }}">
+                              <div style="width:{{ [val*2,100]|min }}%"></div>
+                          </div>
+                      </div>
+                      {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. DISEASE INFORMATION -->
+        <div class="tm-card">
+            <h4><i class="fas fa-book-medical"></i> {{ t.disease_info }}</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tm-kv">
+                        <div class="k">{{ t.symptoms }}</div>
+                        <div class="v" style="font-weight:500">{{ r.symptoms }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tm-kv">
+                        <div class="k">{{ t.cause }}</div>
+                        <div class="v" style="font-weight:500">{{ r.cause }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. ACTION PLAN -->
+        <div class="tm-card" id="action-plan">
+            <h4><i class="fas fa-tasks"></i> {{ t.action_plan }}</h4>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="tm-col col-today">
+                        <h5><i class="fas fa-bolt me-1"></i> {{ t.today }}</h5>
+                        <ul class="tm-list">{% for x in r.immediate %}<li>{{ x }}</li>{% endfor %}</ul>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="tm-col col-week">
+                        <h5><i class="fas fa-calendar-week me-1"></i> {{ t.this_week }}</h5>
+                        <ul class="tm-list">{% for x in r.this_week %}<li>{{ x }}</li>{% endfor %}</ul>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="tm-col col-prev">
+                        <h5><i class="fas fa-shield-alt me-1"></i> {{ t.prevention }}</h5>
+                        <ul class="tm-list">{% for x in r.prevention %}<li>{{ x }}</li>{% endfor %}</ul>
+                    </div>
+                </div>
+            </div>
+
+            {% if r.db %}
+            <div id="expert-solutions" class="mt-4 pt-3 border-top">
+                <h4 style="font-size:1.1rem"><i class="fas fa-database"></i> {{ t.expert_solutions }}</h4>
+                {% for d in r.db %}
+                <table class="tm-table mb-3">
+                    <tr><th colspan="2" class="bg-danger bg-opacity-10 text-danger fw-bold">{{ t.solution }}: {{ loop.index }}</th></tr>
+                    <tr><th>{{ t.symptoms }}</th><td>{{ d.symptoms }}</td></tr>
+                    <tr><th>{{ t.pesticides }}</th><td>{{ d.pesticides }}</td></tr>
+                    <tr><th>{{ t.fertilizers }}</th><td>{{ d.fertilizer }}</td></tr>
+                    <tr><th>{{ t.how_to_use }}</th><td>{{ d.how }}</td></tr>
+                </table>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 5. WEATHER & RISK -->
+        <div class="tm-card" id="weather">
+            <h4>
+                <i class="fas fa-cloud-sun-rain"></i> {{ t.weather_title }}
+                {% if r.weather and r.weather.place %}
+                    <small class="ms-2 tm-note">{{ r.weather.place }} &middot; {{ r.weather.cond }}</small>
+                {% endif %}
+            </h4>
+
+            <form method="get" action="{{ url_for('test_pro3') }}" class="row g-2 align-items-center mb-3 tm-noprint">
+                <input type="hidden" name="lang" value="{{ lang }}">
+                {% if act %}<input type="hidden" name="act" value="{{ act }}">{% endif %}
+                <div class="col-auto">
+                    <input type="text" name="city" value="{{ city }}" class="form-control form-control-sm" placeholder="{{ t.city }}">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-danger" type="submit">
+                        <i class="fas fa-sync-alt me-1"></i> {{ t.update_weather }}
+                    </button>
+                </div>
+            </form>
+
+            {% if m.weather %}
+            <div class="row">
+                <div class="col-6 col-md-3"><div class="tm-tile"><div class="n">{{ m.weather.temp }}&deg;C</div><div class="l">{{ t.temperature }}</div></div></div>
+                <div class="col-6 col-md-3"><div class="tm-tile"><div class="n">{{ m.weather.humidity }}%</div><div class="l">{{ t.humidity }}</div></div></div>
+                <div class="col-6 col-md-3"><div class="tm-tile"><div class="n">{{ m.weather.wind }} km/h</div><div class="l">{{ t.wind }}</div></div></div>
+                <div class="col-6 col-md-3"><div class="tm-tile"><div class="n">{{ m.weather.recent_rain }} mm</div><div class="l">{{ t.rain_3d }}</div></div></div>
+            </div>
+
+            <div class="tm-risk {{ m.weather.level }} mb-2">
+                <strong>{{ t.risk_title }}:
+                    <span class="risk-{{ m.weather.level }}">{{ t[m.weather.level] }} ({{ t.risk_score }}: {{ m.weather.score }}/100)</span>
+                </strong>
+                <div class="tm-bar {{ 'red' if m.weather.level=='high' else ('warn' if m.weather.level=='moderate' else '') }} my-2">
+                    <div style="width:{{ m.weather.score }}%"></div>
+                </div>
+                <div>{{ r.weather.risk_text }}</div>
+            </div>
+
+            {% if r.weather.spray %}
+            <div class="tm-spray">
+                <i class="fas fa-spray-can me-1"></i> <strong>{{ t.spray_advice }}:</strong> {{ r.weather.spray }}
+            </div>
+            {% endif %}
+
+            {% if m.weather.forecast %}
+            <div class="mt-3">
+                <div class="tm-note text-uppercase fw-bold mb-2">{{ t.forecast }}</div>
+                <div class="tm-forecast">
+                    {% for f in m.weather.forecast %}
+                    <div>
+                        <strong>{{ f.date }}</strong><br>
+                        {{ f.tmin }}&deg; - {{ f.tmax }}&deg;C<br>
+                        <i class="fas fa-tint me-1 text-primary"></i> {{ f.rain }} mm ({{ f.prob }}%)
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="alert alert-warning mb-0">{{ t.no_weather }}</div>
+            {% endif %}
+        </div>
+
+        <!-- 6. FERTILIZER RECOMMENDATIONS -->
+        <div class="tm-card">
+            <h4><i class="fas fa-seedling"></i> {{ t.fertilizer_title }}</h4>
+            <ul class="tm-list">{% for x in r.fertilizer %}<li>{{ x }}</li>{% endfor %}</ul>
+        </div>
+
+        <!-- 7. FINAL ADVISORY -->
+        <div class="tm-final mb-4">
+            <h4><i class="fas fa-clipboard-check me-2"></i> {{ t.final_title }}</h4>
+            <div class="row-f"><span class="lab">{{ t.l_diagnosis }}:</span> {{ r.final.diagnosis }}</div>
+            {% if r.final.confidence %}<div class="row-f"><span class="lab">{{ t.l_confidence }}:</span> {{ r.final.confidence }}</div>{% endif %}
+            {% if r.final.explain %}<div class="row-f"><span class="lab">{{ t.l_explain }}:</span> {{ r.final.explain }}</div>{% endif %}
+            {% if r.final.weather %}<div class="row-f"><span class="lab">{{ t.l_weather }}:</span> {{ r.final.weather }}</div>{% endif %}
+            <div class="row-f"><span class="lab">{{ t.l_advisory }}:</span> {{ r.final.advisory }}</div>
+            <div class="row-f"><span class="lab">{{ t.l_fertilizer }}:</span> {{ r.final.fertilizer }}</div>
+            <div class="row-f"><span class="lab">{{ t.l_assist }}:</span> {{ r.final.assist }}</div>
+        </div>
+
+        <!-- 8. AI CHATBOT -->
+        <div class="tm-card tm-chat tm-noprint" id="ai-assistant" style="padding:0;overflow:hidden">
+            <div id="tomoraChat"></div>
+        </div>
+
+        <p class="tm-note mb-4"><i class="fas fa-info-circle me-1"></i> {{ t.disclaimer }}</p>
+
+        {% else %}
+        <!-- FALLBACK DIAGNOSTIC VIEW -->
+        <div class="tm-card" id="contact">
+            <h4>Predicted Result</h4>
+            <p><strong>Class:</strong> {{ts}}</p>
+            <div class="mb-3">
+                <img src="../static/data/{{fn}}" class="rounded border" width="220" height="220" style="object-fit:cover;">
+            </div>
+            {% if st=="1" %}
+              {% for rs in data3 %}
+                <div class="card mb-3 border-danger-subtle">
+                    <div class="card-header bg-danger text-white font-weight-bold">Solution {{loop.index}}</div>
+                    <div class="card-body">
+                        <h6><strong>Symptoms:</strong></h6>
+                        <p class="small text-muted">{{rs[3]}}</p>
+                        <h6><strong>Pesticides:</strong></h6>
+                        <p class="small text-muted">{{rs[6]}}</p>
+                        <h6><strong>Fertilizers:</strong></h6>
+                        <p class="small text-muted">{{rs[7]}}</p>
+                        <h6><strong>How to use:</strong></h6>
+                        <p class="small text-muted">{{rs[4]}}</p>
+                    </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </main>
+</div>
+
+<!-- JS LIBRARIES -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{% if r %}
+<!-- CHATBOT (Instagram-style) -->
+<script>
+    window.TOMORA_CHAT = {url: "{{ url_for('chat_api') }}", mode: "inline", mount: "tomoraChat", lang: "{{ lang }}",
+        title: {{ t.chat_title|tojson }}, sub: {{ r.disease|tojson }}, placeholder: {{ t.chat_placeholder|tojson }}, hello: {{ t.chat_hello|tojson }},
+        chips: [{{ t.q1|tojson }}, {{ t.q2|tojson }}, {{ t.q3|tojson }}, {{ t.q4|tojson }}]};
+</script>
+<script src="{{ url_for('chatbot_widget') }}"></script>
+{% endif %}
+
+</body>
+</html>

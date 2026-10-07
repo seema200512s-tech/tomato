@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMORA AI | Admin Dashboard</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    /* ==========================================================
+       TOMORA AI - ADMIN DASHBOARD BRAND STYLES
+    ========================================================== */
+    :root {
+        --primary: #dc2626;
+        --primary-dark: #991b1b;
+        --primary-light: #ef4444;
+        --primary-soft: #fef2f2;
+        --orange: #f97316;
+        --sidebar-bg: #18090a;
+        --sidebar-card: #271012;
+        --sidebar-border: rgba(220, 38, 38, 0.15);
+        --body-bg: #faf7f7;
+        --card-bg: #ffffff;
+        --dark: #211416;
+        --muted: #756668;
+        --border: rgba(185, 28, 28, 0.08);
+        --shadow-sm: 0 8px 25px rgba(70, 15, 15, 0.05);
+        --shadow-md: 0 15px 35px rgba(70, 15, 15, 0.08);
+        --shadow-lg: 0 25px 60px rgba(70, 15, 15, 0.12);
+        --sidebar-width: 280px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--dark);
+        background-color: var(--body-bg);
+        min-height: 100vh;
+        display: flex;
+        overflow-x: hidden;
+    }
+
+    /* ==========================================================
+       DARK DASHBOARD SIDEBAR
+    ========================================================== */
+    .dashboard-sidebar {
+        width: var(--sidebar-width);
+        background: linear-gradient(180deg, #1c080a 0%, #290a0d 100%);
+        border-right: 1px solid var(--sidebar-border);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 24px 18px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 800;
+        padding: 10px 12px;
+        margin-bottom: 30px;
+    }
+
+    .brand-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f97316, #dc2626);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+    }
+
+    .brand-ai { color: var(--orange); }
+
+    .sidebar-heading {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        padding: 0 14px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .sidebar-link i {
+        font-size: 1.1rem;
+        width: 22px;
+        text-align: center;
+        transition: all 0.25s ease;
+    }
+
+    .sidebar-link:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+        color: #ffffff;
+        background: linear-gradient(135deg, rgba(220, 38, 38, 0.9), rgba(249, 115, 22, 0.9));
+        box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+    }
+
+    .sidebar-link.active i { color: #ffffff; }
+
+    .sidebar-badge {
+        background: rgba(249, 115, 22, 0.2);
+        color: var(--orange);
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        font-size: 0.7rem;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 20px;
+        margin-left: auto;
+    }
+
+    .sidebar-user-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .user-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+    }
+
+    /* ==========================================================
+       MAIN DASHBOARD CONTENT (LIGHT)
+    ========================================================== */
+    .dashboard-main {
+        margin-left: var(--sidebar-width);
+        flex: 1;
+        padding: 30px 40px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* TOP HEADER BAR */
+    .dashboard-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 35px;
+    }
+
+    .page-title {
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        color: var(--dark);
+        margin: 0;
+    }
+
+    .page-subtitle {
+        color: var(--muted);
+        font-size: 0.88rem;
+        margin-top: 4px;
+    }
+
+    /* STAT METRIC CARDS */
+    .stat-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 24px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+    }
+
+    .icon-orange { background: #fff7ed; color: var(--orange); }
+    .icon-red { background: var(--primary-soft); color: var(--primary); }
+    .icon-green { background: #f0fdf4; color: #16a34a; }
+
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--dark);
+        line-height: 1;
+    }
+
+    .stat-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    /* MAIN TRAINING DASHBOARD CARD */
+    .training-card {
+        background: var(--card-bg);
+        border-radius: 28px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .training-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--orange), var(--primary));
+    }
+
+    .training-img-wrap {
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid rgba(220, 38, 38, 0.12);
+        box-shadow: var(--shadow-sm);
+        background: var(--primary-soft);
+    }
+
+    .training-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* PROMINENT GLOWING LOAD BUTTON */
+    .btn-load-data {
+        width: 100%;
+        padding: 18px 28px;
+        border-radius: 18px;
+        border: none;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #ffffff;
+        background: linear-gradient(135deg, #f04438 0%, #dc2626 50%, #991b1b 100%);
+        box-shadow: 0 12px 32px rgba(220, 38, 38, 0.38);
+        cursor: pointer;
+        transition: all 0.35s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        letter-spacing: 0.3px;
+    }
+
+    .btn-load-data:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 42px rgba(220, 38, 38, 0.5);
+        color: #ffffff;
+    }
+
+    .btn-load-data:active {
+        transform: translateY(-1px);
+    }
+
+    .btn-load-data i {
+        font-size: 1.35rem;
+    }
+
+    /* FOOTER */
+    .dashboard-footer {
+        margin-top: auto;
+        padding-top: 30px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.82rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* RESPONSIVE TOGGLES */
+    @media (max-width: 991px) {
+        .dashboard-sidebar {
+            transform: translateX(-100%);
+        }
+        .dashboard-sidebar.show {
+            transform: translateX(0);
+        }
+        .dashboard-main {
+            margin-left: 0;
+            padding: 20px;
+        }
+    }
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================================================
+     DARK DASHBOARD SIDEBAR
+========================================================== -->
+<aside class="dashboard-sidebar" id="sidebar">
+    <div>
+        <!-- BRAND -->
+        <a href="/admin" class="sidebar-brand">
+            <span class="brand-icon">
+                <i class="fa-solid fa-seedling"></i>
+            </span>
+            <span>TOMORA <span class="brand-ai">AI</span></span>
+        </a>
+
+        <!-- MENU HEADING -->
+        <div class="sidebar-heading">Admin Portal</div>
+
+        <!-- NAVIGATION LINKS -->
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/admin" class="sidebar-link active">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                    <span class="sidebar-badge">Active</span>
+                </a>
+            </li>
+            <li>
+                <a href="/add_fert" class="sidebar-link">
+                    <i class="fa-solid fa-flask"></i>
+                    <span>Add Fertilizer</span>
+                </a>
+            </li>
+            <li>
+                <a href="/" class="sidebar-link">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>Public Site</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout" class="sidebar-link text-danger">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- USER PROFILE CARD AT BOTTOM OF SIDEBAR -->
+    <div class="sidebar-user-card">
+        <div class="user-avatar">
+            <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <div class="overflow-hidden">
+            <div class="text-white fw-bold text-truncate" style="font-size: 0.88rem;">Administrator</div>
+            <div class="text-white-50 small text-truncate" style="font-size: 0.75rem;">admin@tomora.ai</div>
+        </div>
+    </div>
+</aside>
+
+
+<!-- ==========================================================
+     MAIN DASHBOARD CONTENT AREA
+========================================================== -->
+<main class="dashboard-main">
+
+    <!-- TOP HEADER -->
+    <div class="dashboard-header">
+        <div>
+            <h1 class="page-title">Admin Dashboard</h1>
+            <div class="page-subtitle">Manage CNN model training phases, system operations, and crop advisories</div>
+        </div>
+        
+        <!-- MOBILE SIDEBAR TOGGLE BUTTON -->
+        <button class="btn btn-light d-lg-none border shadow-sm" type="button" onclick="document.getElementById('sidebar').classList.toggle('show')">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- METRIC SUMMARY CARDS -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-icon icon-orange">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="stat-value">CNN Model</div>
+                <div class="stat-label">Deep Learning Engine</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-icon icon-red">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div class="stat-value">10 Classes</div>
+                <div class="stat-label">Tomato Leaf Diseases</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-icon icon-green">
+                    <i class="fa-solid fa-shield-check"></i>
+                </div>
+                <div class="stat-value">Ready</div>
+                <div class="stat-label">System Training Status</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN TRAINING PHASE SECTION CONTAINER -->
+    <div class="training-card mb-4">
+        <div class="row align-items-center g-4">
+            <!-- LEFT IMAGE DISPLAY -->
+            <div class="col-lg-5">
+                <div class="training-img-wrap p-2 bg-white">
+                    <img src="../static/img/tom.png" class="img-fluid rounded-4" alt="Tomato Leaf Training" onerror="this.src='https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=1200&q=85'">
+                </div>
+            </div>
+
+            <!-- RIGHT FORM CONTROLS & LOAD BUTTON -->
+            <div class="col-lg-7">
+                <div class="ps-lg-3">
+                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold mb-2" style="font-size: 0.78rem;">
+                        <i class="fa-solid fa-gears me-1"></i> SYSTEM INITIALIZATION
+                    </span>
+                    <h2 class="h3 fw-bold text-dark mb-2">Model Training Phase</h2>
+                    <p class="text-muted small mb-4">
+                        Click the button below to load training datasets, initialize feature extraction, and trigger the CNN neural network pipeline for tomato leaf disease detection[cite: 3].
+                    </p>
+
+                    <!-- LOAD DATA FORM -->
+                    <form method="post" name="sentMessage" action="/img_process">
+                        <button class="btn-load-data" type="submit" name="btn" id="sendMessageButton">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Load Data & Train System</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD FOOTER -->
+    <footer class="dashboard-footer">
+        <div>&copy; 2026 TOMORA AI. All Rights Reserved.</div>
+        <div>Tomato Leaf Disease Diagnostic & Advisory Platform</div>
+    </footer>
+
+</main>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

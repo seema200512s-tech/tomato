@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMORA AI | Advanced Diagnostic Suite</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    /* ==========================================================
+       TOMORA AI - USER DASHBOARD BRAND STYLES
+    ========================================================== */
+    :root {
+        --primary: #dc2626;
+        --primary-dark: #991b1b;
+        --primary-light: #ef4444;
+        --primary-soft: #fef2f2;
+        --orange: #f97316;
+        --nav-bg: #18090a;
+        --nav-border: rgba(220, 38, 38, 0.2);
+        --body-bg: #faf7f7;
+        --card-bg: #ffffff;
+        --dark: #211416;
+        --muted: #756668;
+        --border: rgba(185, 28, 28, 0.08);
+        --shadow-sm: 0 8px 25px rgba(70, 15, 15, 0.05);
+        --shadow-md: 0 15px 35px rgba(70, 15, 15, 0.08);
+        --shadow-lg: 0 25px 60px rgba(70, 15, 15, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--dark);
+        background-color: var(--body-bg);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ==========================================================
+       TOP NAVIGATION BAR (NO SIDEBAR)
+    ========================================================== */
+    .top-navbar {
+        background: linear-gradient(135deg, #1c080a 0%, #290a0d 100%);
+        border-bottom: 1px solid var(--nav-border);
+        padding: 16px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1.35rem;
+        font-weight: 800;
+    }
+
+    .brand-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f97316, #dc2626);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+    }
+
+    .brand-ai { color: var(--orange); }
+
+    .nav-user-badge {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 6px 16px;
+        border-radius: 30px;
+        color: #ffffff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-nav-action {
+        background: rgba(220, 38, 38, 0.15);
+        color: #ffffff;
+        border: 1px solid rgba(220, 38, 38, 0.3);
+        padding: 8px 20px;
+        border-radius: 12px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .btn-nav-action:hover {
+        background: var(--primary);
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    /* ==========================================================
+       HERO BANNER
+    ========================================================== */
+    .user-hero {
+        background: linear-gradient(135deg, #211416 0%, #3d1418 100%);
+        border-radius: 28px;
+        padding: 40px;
+        color: #ffffff;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 35px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .user-hero::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+        pointer-events: none;
+    }
+
+    .hero-badge {
+        background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(220, 38, 38, 0.2));
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        color: var(--orange);
+        font-size: 0.78rem;
+        font-weight: 800;
+        padding: 6px 14px;
+        border-radius: 30px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .hero-title {
+        font-size: 2.1rem;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.98rem;
+        max-width: 620px;
+    }
+
+    .quick-stat-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 18px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(220, 38, 38, 0.2);
+        color: #ef4444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    /* ==========================================================
+       IFRAME / TESTING CONTAINER
+    ========================================================== */
+    .diagnostic-card {
+        background: var(--card-bg);
+        border-radius: 28px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+        padding: 36px;
+        margin-bottom: 35px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .diagnostic-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--orange), var(--primary));
+    }
+
+    .sample-preview-box {
+        background: #fcf8f8;
+        border: 2px dashed rgba(220, 38, 38, 0.2);
+        border-radius: 20px;
+        padding: 24px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .sample-preview-box:hover {
+        border-color: var(--primary);
+        background: var(--primary-soft);
+    }
+
+    .preview-img {
+        max-height: 280px;
+        border-radius: 16px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .iframe-wrapper {
+        border-radius: 20px;
+        overflow: hidden;
+        background: #fcf8f8;
+        border: 1px solid rgba(220, 38, 38, 0.15);
+        box-shadow: var(--shadow-sm);
+    }
+
+    /* FEATURE CARDS */
+    .feature-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        padding: 24px;
+        box-shadow: var(--shadow-sm);
+        height: 100%;
+        transition: transform 0.25s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .feature-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+    }
+
+    /* FOOTER */
+    .user-footer {
+        margin-top: auto;
+        background: #18090a;
+        color: rgba(255, 255, 255, 0.6);
+        padding: 25px 0;
+        font-size: 0.85rem;
+        border-top: 1px solid var(--nav-border);
+    }
+
+    @media (max-width: 768px) {
+        .user-hero { padding: 25px; }
+        .hero-title { font-size: 1.6rem; }
+    }
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================================================
+     TOP NAVIGATION BAR (NO SIDEBAR)
+========================================================== -->
+<header class="top-navbar">
+    <div class="container-xl d-flex align-items-center justify-content-between">
+        <!-- BRAND -->
+        <a href="/" class="brand-logo">
+            <span class="brand-icon">
+                <i class="fa-solid fa-leaf"></i>
+            </span>
+            <span>TOMORA <span class="brand-ai">AI</span></span>
+        </a>
+
+        <!-- RIGHT NAV ACTIONS -->
+        <div class="d-flex align-items-center gap-3">
+            <div class="nav-user-badge d-none d-sm-flex">
+                <i class="fa-solid fa-vial text-danger"></i>
+                <span>Testing Workflow</span>
+            </div>
+            <a href="/" class="btn-nav-action">
+                <i class="fa-solid fa-house me-1"></i> Home
+            </a>
+
+        </div>
+    </div>
+</header>
+
+
+<!-- ==========================================================
+     MAIN DASHBOARD CONTENT
+========================================================== -->
+<main class="container-xl py-4 flex-grow-1">
+
+    <!-- HERO DASHBOARD BANNER -->
+    <div class="user-hero">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-laptop-code"></i> INTEGRATED ANALYSIS SUITE
+                </div>
+                <h1 class="hero-title">Live Testing & Diagnostics</h1>
+                <p class="hero-subtitle">
+                    Process image parameters and generate real-time neural network detection metrics.
+                </p>
+            </div>
+
+            <!-- QUICK STATS -->
+            <div class="col-lg-5">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="quick-stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-sliders"></i></div>
+                            <div>
+                                <div class="fw-bold text-white" style="font-size: 1.1rem;">Active Mode</div>
+                                <div class="small text-white-50">Testing Phase</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="quick-stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <div>
+                                <div class="fw-bold text-white" style="font-size: 1.1rem;">Live Sync</div>
+                                <div class="small text-white-50">IFrame Interface</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- DIAGNOSTIC CONTAINER WITH IFRAME -->
+    <div class="diagnostic-card">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h3 class="fw-bold m-0" style="font-size: 1.35rem; color: var(--dark);">
+                    <i class="fa-solid fa-flask-vial text-danger me-2"></i>Testing Phase Module
+                </h3>
+                <div class="text-muted small mt-1">Interactive diagnostics embedded interface</div>
+            </div>
+            <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold" style="font-size: 0.8rem;">
+                <i class="fa-solid fa-circle-dot me-1 text-success"></i> Module Active
+            </span>
+        </div>
+
+        <div class="row align-items-center g-4">
+            <!-- LEFT COLUMN: SAMPLE IMAGE -->
+            <div class="col-md-4">
+                <div class="sample-preview-box">
+                    <img src="../static/img/tom.png" class="img-fluid preview-img" alt="Tomato Leaf Inspection">
+                    <div class="mt-3 text-muted fw-semibold small">Tomato Leaf Inspection Target</div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: PRESERVED IFRAME EMBED -->
+            <div class="col-md-8">
+                <div class="iframe-wrapper">
+                    <!-- PRESERVED FUNCTIONALITY: EXACT IFRAME TAG -->
+                    <iframe src="/test_pro2?act={{act}}" width="100%" height="500" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- THREE COLUMN FEATURE GUIDES -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <h5 class="fw-bold mb-2" style="font-size: 1.05rem;">Multi-Layer Detection</h5>
+                <p class="text-muted small m-0">Evaluates leaf surfaces through convolutional feature extraction layers.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                <h5 class="fw-bold mb-2" style="font-size: 1.05rem;">Instant Feedback</h5>
+                <p class="text-muted small m-0">Displays processing results in real-time through embedded frame triggers.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h5 class="fw-bold mb-2" style="font-size: 1.05rem;">High Precision</h5>
+                <p class="text-muted small m-0">Utilizes trained deep learning weights for high-accuracy plant health analysis.</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+<!-- ==========================================================
+     USER DASHBOARD FOOTER
+========================================================== -->
+<footer class="user-footer">
+    <div class="container-xl d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+        <div>
+            &copy; 2026 <strong>TOMORA AI</strong>. All Rights Reserved.
+        </div>
+        <div class="d-flex gap-4">
+            <a href="/" class="text-white-50 text-decoration-none">Privacy Policy</a>
+            <a href="/" class="text-white-50 text-decoration-none">Terms of Service</a>
+            <a href="/admin" class="text-white-50 text-decoration-none">Admin Area</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
